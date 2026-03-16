@@ -30,10 +30,10 @@ app.get('/notes', (req, res) => {
     res.status(200).json({ message: 'Retrieved all notes' });
 });
 
-app.get('/notes/:notesId', (req, res) => {
+app.get('/notes/:noteId', (req, res) => {
     console.log(req.params);
     res.status(200).json({
-        message: `Retrieved note with ID:${req.params.notesId}`
+        message: `Retrieved note with ID:${req.params.noteId}`
     })
 })
 
