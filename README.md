@@ -33,6 +33,6 @@ npm run dev
 ## Доступні маршрути
 
 - `GET /notes` — повертає список нотаток (заглушка)
-- `GET /notes/:notesId` — повертає нотатку за ID
+- `GET /notes/:noteId` — повертає нотатку за ID
 - `GET /test-error` — повертає помилку `500` для тесту error-handler
 - Будь-який інший шлях повертає `404 Route not found`
