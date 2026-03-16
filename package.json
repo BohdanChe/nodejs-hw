@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-hw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BohdanChe/nodejs-hw.git"
+  },
+  "keywords": [],
+  "author": "Bohdan Cheshenko <bohdancheshemko@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BohdanChe/nodejs-hw/issues"
+  },
+  "homepage": "https://github.com/BohdanChe/nodejs-hw#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "node": "^25.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
