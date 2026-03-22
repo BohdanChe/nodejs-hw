@@ -10,7 +10,7 @@ export const errorHandler = (err, req, res, _next) => {
     
     res.status(500).json({
         message: isProduction
-            ? 'Нічого не працює ,ідіть до дому спати і не парте мозги'
-            : err.stack,
+            ? 'Something went wrong. Please try again later.'
+            : err.message || 'Internal server error',
     });
 } 
