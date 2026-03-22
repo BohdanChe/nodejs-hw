@@ -1,11 +1,21 @@
-# nodejs-hw
+# Notes API
 
-Невеликий навчальний Node.js + Express проєкт із простими API-ендпоїнтами.
+REST API для керування нотатками, побудований на Node.js, Express та MongoDB (Mongoose).
+
+## Стек технологій
+
+- **Node.js** (ESM modules)
+- **Express 5**
+- **MongoDB** + **Mongoose**
+- **pino** / **pino-pretty** — логування запитів
+- **dotenv** — змінні оточення
+- **nodemon** — гаряче перезавантаження при розробці
 
 ## Вимоги
 
-- Node.js (рекомендовано 18+)
+- Node.js 18+
 - npm
+- MongoDB (локальний або Atlas)
 
 ## Встановлення
 
@@ -20,19 +30,54 @@ npm install
 ```env
 PORT=3000
 NODE_ENV=development
+MONGODB_URL=mongodb://localhost:27017/notes-api
 ```
 
-## Запуск у режимі розробки
+## Запуск
 
 ```bash
+# режим розробки (з nodemon)
 npm run dev
+
+# продакшн
+npm start
 ```
 
-Сервер запускається через `nodemon`.
+## API ендпоїнти
 
-## Доступні маршрути
+| Метод    | Маршрут          | Опис                   |
+| -------- | ---------------- | ---------------------- |
+| `GET`    | `/notes`         | Отримати всі нотатки   |
+| `GET`    | `/notes/:noteId` | Отримати нотатку за ID |
+| `POST`   | `/notes`         | Створити нову нотатку  |
+| `PATCH`  | `/notes/:noteId` | Оновити нотатку за ID  |
+| `DELETE` | `/notes/:noteId` | Видалити нотатку за ID |
 
-- `GET /notes` — повертає список нотаток (заглушка)
-- `GET /notes/:noteId` — повертає нотатку за ID
-- `GET /test-error` — повертає помилку `500` для тесту error-handler
-- Будь-який інший шлях повертає `404 Route not found`
+## Модель нотатки
+
+```json
+{
+  "title": "string (required)",
+  "content": "string",
+  "tag": "Work | Personal | Meeting | Shopping | Ideas | Travel | Finance | Health | Important | Todo"
+}
+```
+
+## Структура проєкту
+
+```
+src/
+├── controllers/
+│   └── notesControllers.js   # Логіка обробки запитів
+├── db/
+│   └── connectMongoDB.js     # Підключення до MongoDB
+├── middleware/
+│   ├── errorHandler.js       # Глобальний error handler
+│   ├── logger.js             # HTTP логер (pino)
+│   └── notFoundHandler.js    # 404 handler
+├── models/
+│   └── note.js               # Mongoose схема нотатки
+├── routes/
+│   └── notesRoutes.js        # Маршрути Express
+└── server.js                 # Точка входу
+```
