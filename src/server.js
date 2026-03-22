@@ -2,13 +2,18 @@ import express from 'express';
 import cors from 'cors';    
 import 'dotenv/config';
 import pino from 'pino-http';
+import {connectMongoDB} from './db/connectMongoDB.js'; 
+import { notFoundHandler } from './middleware/notFoundHandler.js';  
+import { errorHandler } from './middleware/errorHandler.js';
+import notesRoutes from './routes/notesRoutes.js';
+
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors()); 
 app.use(
   pino({
     level: 'info',
@@ -26,35 +31,14 @@ app.use(
 );
 
 
-app.get('/notes', (req, res) => {
-    res.status(200).json({ message: 'Retrieved all notes' });
-});
+app.use(notesRoutes);
 
-app.get('/notes/:noteId', (req, res) => {
-    console.log(req.params);
-    res.status(200).json({
-        message: `Retrieved note with ID:${req.params.noteId}`
-    })
-})
 
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
 
-app.use((req, res) => {
-    res.status(404).json({ message: 'Route not found' });
-})
+app.use(notFoundHandler);
+app.use(errorHandler);
 
-app.use((err, req, res, _next) => {
-    console.error(err);
-    const isProduction = process.env.NODE_ENV === 'production';
-    res.status(500).json({
-        message: isProduction
-         ? 'Нічого не працює ,ідіть до дому спати і не парте мозги'
-        : err.message,
-    });
-});
-
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
