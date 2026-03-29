@@ -37,5 +37,7 @@ export const updateNoteSchema = {
     title: Joi.string().min(1).optional(),
     content: Joi.string().allow('').optional(),
     tag: Joi.string().valid(...TAGS).optional(),
-  }).min(1),
+  })
+    .or('title', 'content', 'tag')
+    .min(1),
 };
