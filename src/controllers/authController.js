@@ -5,6 +5,7 @@ import { createSession, setCookies } from "../services/auth.js";
 import { Session } from "../models/session.js"; 
 
 
+
 export const registerUser = async (req, res) => {
     const { email,password } = req.body;
 
@@ -50,5 +51,27 @@ export const logoutUser = async (req, res) => {
         res.clearCookie('sessionId');
         res.status(204).send();
     }
+
+};
+
+export const refreshUserSession = async (req, res) => {
+    const { refreshToken, sessionId } = req.cookies;
+    const session = await Session.findOne({
+        _id: sessionId,
+        refreshToken,
+    });
+    if (!session) {
+        throw createHttpError(401, 'No session found');
+    }
+
+    const isRefreshTokenExpired = new Date() > new Date(session.refreshTokenValidUntil);
+    if (isRefreshTokenExpired) {
+        throw createHttpError(401, 'Refresh token expired');
+    }
+    await Session.deleteOne({ _id: sessionId, refreshToken });
+    const newSession = await createSession(session.userId);
+    setCookies(res, newSession);
+    
+    res.status(200).json({ message: 'Session refreshed' });
 
 };
