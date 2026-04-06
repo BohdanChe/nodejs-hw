@@ -6,14 +6,14 @@ import { FIFTEEN_MINUTES, ONE_DAY } from "../constants/time.js";
 export const createSession = async (userId) => {
     return  Session.create({
         userId: userId,
-        accessToken: crypto.randomUUID(),
-        refreshToken: crypto.randomUUID(),
+        accessToken: crypto.randomBytes(30).toString('base64'),
+        refreshToken: crypto.randomBytes(30).toString('base64'),
         accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
         refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
     });
 }
 
-export const setCookies = (res, session) => {
+export const setSessionCookies = (res, session) => {
     res.cookie('accessToken', session.accessToken, {
         httpOnly: true,
         secure: true,
