@@ -3,7 +3,7 @@ import {Schema,model} from "mongoose";
 
 
 const userSchema = new Schema({
-    userName: { type: String, trim: true },
+    username: { type: String, trim: true },
     email: { type: String, trim: true, unique: true, required: true },
     password: { type: String, trim: true, required: true },
     
@@ -15,8 +15,8 @@ const userSchema = new Schema({
 );
 
 userSchema.pre('save', function () {
-    if (!this.userName) {
-        this.userName = this.email;
+    if (!this.username) {
+        this.username = this.email;
     }
 });
 

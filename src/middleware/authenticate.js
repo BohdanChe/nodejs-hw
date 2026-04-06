@@ -8,6 +8,7 @@ import { Session } from "../models/session.js";
 import { User } from "../models/user.js";
 
 export const authenticate = async (req, res, next) => {
+    
     const { accessToken } = req.cookies;
 
     if (!accessToken) {
@@ -19,7 +20,7 @@ export const authenticate = async (req, res, next) => {
         throw createHttpError(401, 'No session found');
     }
 
-    const isTokenExpired = new Date() > new Date(session.accessTokenvalidUntil);
+    const isTokenExpired = new Date() > new Date(session.accessTokenValidUntil);
     if (isTokenExpired) {
         throw createHttpError(401, 'Token expired');
     }
