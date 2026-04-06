@@ -5,16 +5,14 @@ import { createNoteSchema, getAllNotesSchema, noteIdSchema, updateNoteSchema } f
 import { authenticate } from '../middleware/authenticate.js';
 const router = Router();
 
-router.use("/notes",authenticate);
+router.get('/notes', authenticate, celebrate(getAllNotesSchema), getAllNotes);
 
-router.get('/notes',celebrate(getAllNotesSchema), getAllNotes);
+router.get('/notes/:noteId', authenticate, celebrate(noteIdSchema), getNoteById);
 
-router.get('/notes/:noteId', celebrate(noteIdSchema), getNoteById);
+router.post('/notes', authenticate, celebrate(createNoteSchema), createNote);
 
-router.post('/notes', celebrate(createNoteSchema), createNote);
+router.delete('/notes/:noteId', authenticate, celebrate(noteIdSchema), deleteNote);
 
-router.delete('/notes/:noteId', celebrate(noteIdSchema), deleteNote);
-
-router.patch('/notes/:noteId', celebrate(updateNoteSchema), updateNote);
+router.patch('/notes/:noteId', authenticate, celebrate(updateNoteSchema), updateNote);
 
 export default router; 
