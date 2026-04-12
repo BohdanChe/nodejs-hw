@@ -23,6 +23,11 @@ REST API для керування нотатками, побудований н
 npm install
 ```
 
+## Посилання
+
+- GitHub репозиторій: https://github.com/BohdanChe/nodejs-hw
+- Render деплой: ДОДАЙТЕ*ПОСИЛАННЯ*НА*ВАШ_RENDER*СЕРВІС
+
 ## Змінні оточення
 
 Створіть файл `.env` у корені проєкту:
@@ -30,7 +35,25 @@ npm install
 ```env
 PORT=3000
 NODE_ENV=development
-MONGODB_URL=mongodb://localhost:27017/notes-api
+MONGO_URL=mongodb://localhost:27017/notes-api
+
+# JWT для auth/reset-password
+JWT_SECRET=your_super_secret
+
+# Домен фронтенда для посилання з email
+FRONTEND_DOMAIN=http://localhost:3001
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# Brevo SMTP
+SMTP_PORT=
+SMTP_HOST=
+SMTP_USER=
+SMTP_PASSWORD=
+SMTP_FROM=
 ```
 
 ## Запуск
